@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const AllCourse = ({ item }) => {
   return (
     <div>
@@ -50,9 +52,11 @@ const AllCourse = ({ item }) => {
             {/* <span className="text-green-600 text-sm">Earn Tk 48</span> */}
           </div>
           <div className="mt-4 flex gap-2">
+            <Link to={`/cart/${item.id}`}>
             <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-500 w-full font-bold text-md">
               Add To Cart
             </button>
+            </Link>
           </div>
         </div>
       </div>

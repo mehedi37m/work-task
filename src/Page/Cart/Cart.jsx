@@ -1,12 +1,33 @@
-/* eslint-disable react/react-in-jsx-scope */
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+
+import {  useState } from "react";
+import { Link, useLoaderData, useParams } from "react-router-dom";
 
 
 import { RiDeleteBin5Line } from "react-icons/ri";
 
 const Cart = () => {
-   
+    const allDetails = useLoaderData();
+    const {id} = useParams();
+  
+   const card = allDetails.courseData.find(card =>  card.id == id);
+   console.log(card.discount_price)
+
+   const discountPrice = parseFloat(card.discount_price || 0); 
+//    console.log(discountPrice)
+
+    // State for quantity and total price
+    const [quantity, setQuantity] = useState(1);
+    const subtotal = discountPrice * quantity;
+
+    const handleIncrement = () => {
+        setQuantity(prev => prev + 1);
+    };
+
+    const handleDecrement = () => {
+        if (quantity > 1) {
+            setQuantity(prev => prev - 1);
+        }
+    };
 
     return (
         <div className="m-mt_16px">
@@ -50,12 +71,12 @@ const Cart = () => {
                                                     <div className="mask">
                                                         <img
                                                             className="h-[40px] w-[70px]"
-                                                            src=''
+                                                            src={card.photo}
                                                             alt='Course'
                                                         />
                                                     </div>
                                                     <p className="text-[14.4px] px-[7px] text-center flex ">
-                                                       Course name  <span className="hidden lg:flex ">- unit name</span>
+                                                        {card.course_name} <span className="hidden lg:flex ">-  {card.trainer_data.name}</span>
                                                     </p>
                                                 </div>
 
@@ -63,7 +84,7 @@ const Cart = () => {
                                         </td>
                                         <td>
                                             <p className="text-[14.4px] font-bold p-[7px] text-black text-center">
-                                                discount price
+                                                {card.discount_price}
                                             </p>
                                         </td>
                                         <td>
@@ -71,7 +92,7 @@ const Cart = () => {
                                                 <div className="border">
                                                     <button
                                                         className="px-4 w-[30px] font-bold font_standard my-1.5"
-                                                        
+                                                        onClick={handleDecrement}
                                                     >
                                                         -
                                                     </button>
@@ -80,13 +101,13 @@ const Cart = () => {
                                                     <input
                                                         type="number"
                                                         className="font-bold w-[30px] lg:w-[60px] font_standard px-2 text-center mx-auto h-full"
-                                                      
+                                                       value={quantity} readOnly
                                                     />
                                                 </div>
                                                 <div className="border">
                                                     <button
                                                         className="px-4 w-[30px] font-bold font_standard my-1.5"
-                                                       
+                                                        onClick={handleIncrement}
                                                     >
                                                         +
                                                     </button>
@@ -96,7 +117,7 @@ const Cart = () => {
                                         <td>
                                             <p className="text-[14.4px] font-bold p-[7px] text-black text-center">
                                                
-                                                discount price * quantity
+                                            {subtotal.toFixed(2)}
                                             </p>
                                         </td>
                                     </tr>
@@ -112,13 +133,13 @@ const Cart = () => {
                             <div className="py-3 flex justify-between border-b border-gray-300">
                                 <p className="text-black font-bold">Total Price</p>
                                 <p className="text-black font-bold">
-                                    
+                                BDT {subtotal.toFixed(2)}
                                 </p>
                             </div>
                           
                             <Link
                                 to={`/cart/checkout`}
-                                state={"bdt"}
+                                state={{ currency: "bdt", total: subtotal }}
                                 className="font-medium text-black mb-2 border-2 hover:bg-[#D2C5A2] duration-300 py-2 px-4  block text-center mx-auto w-full"
                             >
                                 PROCEED TO CHECKOUT

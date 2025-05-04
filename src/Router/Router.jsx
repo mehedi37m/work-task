@@ -27,8 +27,9 @@ const Router = createBrowserRouter([
                 loader:() => fetch(`https://itder.com/api/get-course-list`)
             },
             {
-                path: '/checkout',
-                element: <Checkout />
+                path: '/checkout/:id',
+                element: <Checkout />,
+                loader:() => fetch(`https://itder.com/api/get-course-list`)
             },
             {
                 path: '/search',

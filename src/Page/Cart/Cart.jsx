@@ -10,7 +10,7 @@ const Cart = () => {
     const {id} = useParams();
   
    const card = allDetails.courseData.find(card =>  card.id == id);
-   console.log(card.discount_price)
+//    console.log(card.id)
 
    const discountPrice = parseFloat(card.discount_price || 0); 
 //    console.log(discountPrice)
@@ -138,7 +138,7 @@ const Cart = () => {
                             </div>
                           
                             <Link
-                                to={`/cart/checkout`}
+                                to={`/checkout/${card.id}`}
                                 state={{ currency: "bdt", total: subtotal }}
                                 className="font-medium text-black mb-2 border-2 hover:bg-[#D2C5A2] duration-300 py-2 px-4  block text-center mx-auto w-full"
                             >

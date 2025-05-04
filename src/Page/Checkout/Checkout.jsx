@@ -369,7 +369,7 @@ const Checkout = () => {
                           <div className="flex flex-col text-center justify-center items-center py-2  w-[80%]">
                             <div className="mask">
                               <img
-                                className="h-[40px] w-[70px]"
+                                className="h-[240px] w-[170px]"
                                 src={card.photo}
                                 alt="Course"
                               />
